@@ -12,3 +12,7 @@ games:
       - ".rtc"
       - ".srm"
       - ".state"
+    starters:
+      Bulbasaur: grass
+      Charmander: fire
+      Squirtle: water

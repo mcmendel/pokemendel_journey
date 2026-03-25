@@ -16,6 +16,7 @@ class GameConfig:
     pokemon_dir: str
     save_dirs: List[str] = field(default_factory=list)
     save_extensions: List[str] = field(default_factory=list)
+    starters: Dict[str, str] = field(default_factory=dict)
 
 
 def load_config() -> Dict[str, GameConfig]:

@@ -3,8 +3,16 @@
 {% block title %}{{ game.display_name }} - Pokemendel Journey{% endblock %}
 
 {% block content %}
-<h1>{{ game.display_name }}</h1>
-<p class="subtitle">Generation {{ game.generation }} &middot; {{ pokemons | length }} Pokemons</p>
+<div class="game-header">
+    <div>
+        <h1>{{ game.display_name }}</h1>
+        <p class="subtitle">Generation {{ game.generation }} &middot; {{ pokemons | length }} Pokemons</p>
+    </div>
+    <div class="game-actions">
+        <button id="create-games-btn" class="btn" data-game-id="{{ game_id }}">Create Pokemon Games</button>
+        <span id="create-games-msg" class="action-msg"></span>
+    </div>
+</div>
 
 <div class="pokemon-list">
     {% for pokemon in pokemons %}
@@ -19,4 +27,31 @@
     </div>
     {% endfor %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('create-games-btn').addEventListener('click', async function() {
+    const btn = this;
+    const msg = document.getElementById('create-games-msg');
+    const gameId = btn.dataset.gameId;
+
+    btn.disabled = true;
+    btn.textContent = 'Creating...';
+    msg.textContent = '';
+
+    try {
+        const resp = await fetch(`/api/game/${gameId}/create`, { method: 'POST' });
+        const data = await resp.json();
+        msg.textContent = data.message;
+        msg.className = 'action-msg success';
+    } catch (err) {
+        msg.textContent = 'Error: ' + err.message;
+        msg.className = 'action-msg error';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Create Pokemon Games';
+    }
+});
+</script>
 {% endblock %}
