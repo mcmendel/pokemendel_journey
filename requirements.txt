@@ -1,0 +1,2 @@
+git+https://github.com/mcmendel/pokemendel_core.git@0.5.2#egg=pokemendel_core
+
