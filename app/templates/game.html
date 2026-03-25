@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ game.display_name }} - Pokemendel Journey{% endblock %}
+
+{% block content %}
+<h1>{{ game.display_name }}</h1>
+<p class="subtitle">Generation {{ game.generation }} &middot; {{ pokemons | length }} Pokemons</p>
+
+<div class="pokemon-list">
+    {% for pokemon in pokemons %}
+    <div class="pokemon-row">
+        <span class="pokemon-name">{{ pokemon.name }}</span>
+        {% if pokemon.base != pokemon.name %}
+        <span class="pokemon-base">[{{ pokemon.base }}]</span>
+        {% endif %}
+        {% if pokemon.evolution_details %}
+        <span class="pokemon-evo">{{ pokemon.evolution_details }}</span>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

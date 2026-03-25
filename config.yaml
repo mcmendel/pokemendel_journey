@@ -3,9 +3,11 @@ games:
     generation: 1
     display_name: "Pokemon Blue"
     rom_extension: ".gb"
-    base_rom_path: ""
-    pokemon_dir: ""
-    save_dirs: []
+    base_rom_path: "/Users/nirmendel/Documents/games/pokemon/gen1/Pokemon Blue.gb"
+    pokemon_dir: "/Users/nirmendel/Documents/games/pokemon/gen1/all/"
+    save_dirs:
+      - "/Users/nirmendel/Documents/RetroArch/saves/"
+      - "/Users/nirmendel/Documents/RetroArch/states/"
     save_extensions:
       - ".rtc"
       - ".srm"
