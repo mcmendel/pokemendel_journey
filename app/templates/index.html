@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Pokemendel Journey{% endblock %}
+
+{% block content %}
+<h1>Welcome to Pokemendel Journey</h1>
+<p>Select a game to get started:</p>
+<div class="game-cards">
+    {% for game_id, game in games.items() %}
+    <div class="game-card">
+        <h2>{{ game.display_name }}</h2>
+        <p>Generation {{ game.generation }}</p>
+        <div class="game-card-links">
+            <a href="/game/{{ game_id }}/pokemons">View Pokemons</a>
+            <a href="/game/{{ game_id }}/create">Create Game</a>
+            <a href="/game/{{ game_id }}/replace">Replace Game</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

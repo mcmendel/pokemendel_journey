@@ -1,0 +1,12 @@
+games:
+  blue:
+    generation: 1
+    display_name: "Pokemon Blue"
+    rom_extension: ".gb"
+    base_rom_path: ""
+    pokemon_dir: ""
+    save_dirs: []
+    save_extensions:
+      - ".rtc"
+      - ".srm"
+      - ".state"
