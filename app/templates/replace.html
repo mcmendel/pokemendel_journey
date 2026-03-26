@@ -27,6 +27,13 @@
         <button id="next-btn" class="nav-arrow">&rarr;</button>
     </div>
     <p class="replace-hint">Use left/right arrow keys or click the buttons</p>
+
+    <div class="cheat-section">
+        <label class="cheat-toggle">
+            <input type="checkbox" id="show-cheats"> Show Cheat Codes
+        </label>
+        <div id="cheat-codes" class="cheat-codes" style="display:none"></div>
+    </div>
 </div>
 {% endblock %}
 
@@ -67,6 +74,21 @@ async function navigate(direction) {
     img.src = `${imageBaseUrl}/${data.name.toLowerCase()}`;
     img.alt = data.name;
     img.style.display = '';
+
+    updateCheatCodes(data.cheat_codes || []);
+}
+
+let lastCheatCodes = [];
+
+function updateCheatCodes(codes) {
+    lastCheatCodes = codes;
+    const container = document.getElementById('cheat-codes');
+    const showing = document.getElementById('show-cheats').checked;
+    if (!showing || codes.length === 0) {
+        container.innerHTML = '';
+        return;
+    }
+    container.innerHTML = codes.map(c => `<div class="cheat-row"><span class="cheat-name">${c.name}</span><span class="cheat-code">${c.code}</span></div>`).join('');
 }
 
 document.getElementById('next-btn').addEventListener('click', () => navigate('next'));
@@ -75,6 +97,12 @@ document.getElementById('prev-btn').addEventListener('click', () => navigate('pr
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') navigate('next');
     if (e.key === 'ArrowLeft') navigate('prev');
+});
+
+document.getElementById('show-cheats').addEventListener('change', function() {
+    const container = document.getElementById('cheat-codes');
+    container.style.display = this.checked ? 'block' : 'none';
+    updateCheatCodes(lastCheatCodes);
 });
 </script>
 {% endblock %}

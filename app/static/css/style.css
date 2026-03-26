@@ -271,3 +271,47 @@ h1 {
     font-size: 0.85rem;
     margin-top: 2rem;
 }
+
+.cheat-section {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.cheat-toggle {
+    color: #a0a0c0;
+    font-size: 0.9rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.cheat-toggle input {
+    margin-right: 0.4rem;
+}
+
+.cheat-codes {
+    margin-top: 1rem;
+    background: #16213e;
+    border-radius: 6px;
+    padding: 0.8rem 1.2rem;
+    display: inline-block;
+    text-align: left;
+    min-width: 300px;
+}
+
+.cheat-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 0.3rem 0;
+}
+
+.cheat-name {
+    color: #a0a0c0;
+    font-size: 0.9rem;
+}
+
+.cheat-code {
+    color: #4ade80;
+    font-family: monospace;
+    font-size: 0.9rem;
+}

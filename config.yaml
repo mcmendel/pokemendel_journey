@@ -18,3 +18,4 @@ games:
       Bulbasaur: grass
       Charmander: fire
       Squirtle: water
+    cheat_codes_module: "games.gen1.blue.cheat_codes"

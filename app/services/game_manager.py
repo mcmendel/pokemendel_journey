@@ -1,3 +1,4 @@
+import importlib
 import json
 import os
 import random
@@ -171,3 +172,20 @@ def navigate_pokemon(game_id: str, game: GameConfig, pokemon_names: List[str], d
         "letter_changed": letter_changed,
         "group_mark": group_mark,
     }
+
+
+def get_cheat_codes(game: GameConfig, pokemon_name: str) -> List[Dict[str, str]]:
+    """Get cheat codes for a pokemon (its own + 'all' global codes)."""
+    if not game.cheat_codes_module:
+        return []
+
+    module = importlib.import_module(game.cheat_codes_module)
+    cheat_codes = getattr(module, "CHEAT_CODES", {})
+
+    codes = []
+    for cheat in cheat_codes.get("all", set()):
+        codes.append({"name": cheat.name, "code": cheat.code})
+    for cheat in cheat_codes.get(pokemon_name, set()):
+        codes.append({"name": cheat.name, "code": cheat.code})
+
+    return codes
