@@ -10,12 +10,22 @@ games:
     save_dirs:
       - "/Users/nirmendel/Documents/RetroArch/saves/"
       - "/Users/nirmendel/Documents/RetroArch/states/"
-    save_extensions:
-      - ".rtc"
-      - ".srm"
-      - ".state"
     starters:
       Bulbasaur: grass
       Charmander: fire
       Squirtle: water
     cheat_codes_module: "games.gen1.blue.cheat_codes"
+  crystal:
+    generation: 2
+    display_name: "Pokemon Crystal"
+    rom_extension: ".gbc"
+    base_rom_path: "/Users/nirmendel/Documents/games/pokemon/gen2/Pokemon Crystal.gbc"
+    pokemon_dir: "/Users/nirmendel/Documents/games/pokemon/gen2/all/"
+    save_dirs:
+      - "/Users/nirmendel/Documents/RetroArch/states/"
+      - "/Users/nirmendel/Documents/RetroArch/saves/"
+    starters:
+      Chikorita: grass
+      Cyndaquil: fire
+      Totodile: water
+    cheat_codes_module: ""

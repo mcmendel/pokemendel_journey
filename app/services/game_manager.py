@@ -85,14 +85,16 @@ def create_pokemon_games(game: GameConfig, starter_mapping: Dict[str, PokemonRel
         print(f"  {pokemon_name} -> {starter}")
 
         for save_dir in game.save_dirs:
-            for ext in game.save_extensions:
-                src = os.path.join(save_dir, f"{starter}{ext}")
-                dest = os.path.join(save_dir, f"{pokemon_name}{ext}")
-                if not os.path.exists(dest) and os.path.exists(src):
-                    shutil.copy(src, dest)
-                    created += 1
-                else:
-                    skipped += 1
+            for cur_file in os.listdir(save_dir):
+                if cur_file.startswith(f"{starter}."):
+                    suffix = cur_file[len(starter):]
+                    src = os.path.join(save_dir, cur_file)
+                    dest = os.path.join(save_dir, f"{pokemon_name}{suffix}")
+                    if not os.path.exists(dest):
+                        shutil.copy(src, dest)
+                        created += 1
+                    else:
+                        skipped += 1
 
     return {"created": created, "skipped": skipped}
 

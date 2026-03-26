@@ -15,7 +15,6 @@ class GameConfig:
     base_rom_path: str
     pokemon_dir: str
     save_dirs: List[str] = field(default_factory=list)
-    save_extensions: List[str] = field(default_factory=list)
     starters: Dict[str, str] = field(default_factory=dict)
     cheat_codes_module: str = ""
 
