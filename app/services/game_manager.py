@@ -1,10 +1,13 @@
+import json
 import os
 import random
 import shutil
-from typing import Dict
+from typing import Dict, List
 
 from app.config import GameConfig
 from app.models.pokemon_relation import PokemonRelation
+
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data")
 
 TYPE_WEAKER = {
     "grass": "water",
@@ -85,9 +88,69 @@ def create_pokemon_games(game: GameConfig, starter_mapping: Dict[str, PokemonRel
                 src = os.path.join(save_dir, f"{starter}{ext}")
                 dest = os.path.join(save_dir, f"{pokemon_name}{ext}")
                 if not os.path.exists(dest) and os.path.exists(src):
-                    # shutil.copy(src, dest)
+                    shutil.copy(src, dest)
                     created += 1
                 else:
                     skipped += 1
 
     return {"created": created, "skipped": skipped}
+
+
+def _state_path(game_id: str) -> str:
+    os.makedirs(DATA_DIR, exist_ok=True)
+    return os.path.join(DATA_DIR, f"{game_id}_state.json")
+
+
+def _load_state(game_id: str) -> dict:
+    path = _state_path(game_id)
+    if os.path.exists(path):
+        with open(path, "r") as f:
+            return json.load(f)
+    return {"index": -1}
+
+
+def _save_state(game_id: str, state: dict):
+    with open(_state_path(game_id), "w") as f:
+        json.dump(state, f)
+
+
+def get_current_pokemon(game_id: str, pokemon_names: List[str]) -> dict:
+    state = _load_state(game_id)
+    index = state["index"]
+    if index < 0 or index >= len(pokemon_names):
+        return {"index": -1, "name": None, "total": len(pokemon_names)}
+    return {"index": index, "name": pokemon_names[index], "total": len(pokemon_names)}
+
+
+def navigate_pokemon(game_id: str, game: GameConfig, pokemon_names: List[str], direction: str) -> dict:
+    """Move to next or previous pokemon. direction is 'next' or 'prev'.
+
+    Removes the previous pokemon's ROM file and creates the new one.
+    """
+    state = _load_state(game_id)
+    current_index = state["index"]
+
+    if direction == "next":
+        new_index = (current_index + 1) % len(pokemon_names)
+    else:
+        new_index = (current_index - 1) % len(pokemon_names)
+
+    new_pokemon = pokemon_names[new_index]
+    new_rom = os.path.join(game.pokemon_dir, f"{new_pokemon}{game.rom_extension}")
+    if not os.path.exists(new_rom):
+        shutil.copy(game.base_rom_path, new_rom)
+        print(f"  [{game_id}] Created ROM: {new_rom}")
+
+    if 0 <= current_index < len(pokemon_names):
+        prev_pokemon = pokemon_names[current_index]
+        prev_rom = os.path.join(game.pokemon_dir, f"{prev_pokemon}{game.rom_extension}")
+        if os.path.exists(prev_rom):
+            os.remove(prev_rom)
+            print(f"  [{game_id}] Removed ROM: {prev_rom}")
+
+    state["index"] = new_index
+    _save_state(game_id, state)
+
+    print(f"  [{game_id}] {direction}: index {new_index}, pokemon {new_pokemon}")
+
+    return {"index": new_index, "name": new_pokemon, "total": len(pokemon_names)}

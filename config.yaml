@@ -1,3 +1,5 @@
+pokemon_image_base_url: "http://localhost:5222/locke_manager/resources/pokemon"
+
 games:
   blue:
     generation: 1

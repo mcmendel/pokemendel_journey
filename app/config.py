@@ -19,11 +19,21 @@ class GameConfig:
     starters: Dict[str, str] = field(default_factory=dict)
 
 
-def load_config() -> Dict[str, GameConfig]:
+@dataclass
+class AppConfig:
+    games: Dict[str, GameConfig]
+    pokemon_image_base_url: str = ""
+
+
+def load_config() -> AppConfig:
     with open(CONFIG_PATH, "r") as f:
         raw = yaml.safe_load(f)
 
     games = {}
     for game_id, game_data in raw.get("games", {}).items():
         games[game_id] = GameConfig(**game_data)
-    return games
+
+    return AppConfig(
+        games=games,
+        pokemon_image_base_url=raw.get("pokemon_image_base_url", ""),
+    )

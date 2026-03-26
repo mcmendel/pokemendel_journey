@@ -174,3 +174,84 @@ h1 {
     font-size: 0.85rem;
     font-style: italic;
 }
+
+/* Replace page */
+
+.replace-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4rem;
+}
+
+.replace-nav {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.nav-arrow {
+    background: #16213e;
+    color: #e94560;
+    border: 2px solid #e94560;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-arrow:hover {
+    background: #e94560;
+    color: #fff;
+}
+
+.nav-arrow:active {
+    transform: scale(0.95);
+}
+
+.current-pokemon {
+    text-align: center;
+    min-width: 250px;
+}
+
+.pokemon-img {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    image-rendering: pixelated;
+}
+
+.pokemon-index {
+    display: block;
+    color: #a0a0c0;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.pokemon-current-name {
+    display: block;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.pokemon-evo-details {
+    display: block;
+    color: #e9a045;
+    font-size: 0.95rem;
+    font-style: italic;
+    margin-top: 0.5rem;
+    min-height: 1.4em;
+}
+
+.replace-hint {
+    color: #606080;
+    font-size: 0.85rem;
+    margin-top: 2rem;
+}

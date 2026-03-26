@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Replace Game - {{ game.display_name }}{% endblock %}
+
+{% block content %}
+<h1>{{ game.display_name }} - Replace Game</h1>
+
+<div class="replace-container">
+    <div class="replace-nav">
+        <button id="prev-btn" class="nav-arrow">&larr;</button>
+        <div class="current-pokemon">
+            <img id="pokemon-img" class="pokemon-img"
+                 src="{% if current.name %}{{ image_base_url }}/{{ current.name | lower }}{% endif %}"
+                 alt="{{ current.name or '' }}"
+                 {% if not current.name %}style="display:none"{% endif %}>
+            <span class="pokemon-index" id="pokemon-index">
+                {% if current.name %}{{ current.index + 1 }} / {{ current.total }}{% else %}&ndash;{% endif %}
+            </span>
+            <span class="pokemon-current-name" id="pokemon-name">
+                {{ current.name or "Press an arrow key to start" }}
+            </span>
+            <span class="pokemon-evo-details" id="pokemon-evo">
+                {% if current.base and current.base != current.name %}[{{ current.base }}] {% endif %}{{ current.evolution_details or "" }}
+            </span>
+        </div>
+        <button id="next-btn" class="nav-arrow">&rarr;</button>
+    </div>
+    <p class="replace-hint">Use left/right arrow keys or click the buttons</p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const gameId = "{{ game_id }}";
+const imageBaseUrl = "{{ image_base_url }}";
+
+async function navigate(direction) {
+    const resp = await fetch(`/api/game/${gameId}/navigate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ direction })
+    });
+    const data = await resp.json();
+    document.getElementById('pokemon-name').textContent = data.name;
+    document.getElementById('pokemon-index').textContent = `${data.index + 1} / ${data.total}`;
+
+    let evoText = '';
+    if (data.base && data.base !== data.name) evoText += `[${data.base}] `;
+    if (data.evolution_details) evoText += data.evolution_details;
+    document.getElementById('pokemon-evo').textContent = evoText;
+
+    const img = document.getElementById('pokemon-img');
+    img.src = `${imageBaseUrl}/${data.name.toLowerCase()}`;
+    img.alt = data.name;
+    img.style.display = '';
+}
+
+document.getElementById('next-btn').addEventListener('click', () => navigate('next'));
+document.getElementById('prev-btn').addEventListener('click', () => navigate('prev'));
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') navigate('next');
+    if (e.key === 'ArrowLeft') navigate('prev');
+});
+</script>
+{% endblock %}
