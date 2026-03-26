@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, current_app, abort, jsonify
 
 from app.services.game_manager import create_pokemon_games, get_current_pokemon, navigate_pokemon, get_cheat_codes
-from app.services.pokemon_service import get_marked_pokemon_entries
+from app.services.pokemon_service import get_marked_pokemon_entries, is_eevee_family
 from games.registry import get_starter_mapping
 
 pokemon_bp = Blueprint("pokemon", __name__)
@@ -95,5 +95,6 @@ def navigate(game_id):
     entry = entries[result["index"]]
     result["base"] = entry.base
     result["evolution_details"] = entry.evolution_details
-    result["cheat_codes"] = get_cheat_codes(game, result["name"])
+    cheat_pokemon = result["name"] if is_eevee_family(entry.name, entry.base) else entry.base
+    result["cheat_codes"] = get_cheat_codes(game, cheat_pokemon)
     return jsonify(result)
