@@ -219,6 +219,22 @@ h1 {
     min-width: 250px;
 }
 
+.letter-mark {
+    display: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+}
+
+.letter-mark.letter-change {
+    color: #e94560;
+}
+
+.letter-mark.group-mark {
+    color: #a0a0c0;
+}
+
 .pokemon-img {
     width: 160px;
     height: 160px;

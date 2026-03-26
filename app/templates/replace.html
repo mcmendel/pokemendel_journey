@@ -13,6 +13,7 @@
                  src="{% if current.name %}{{ image_base_url }}/{{ current.name | lower }}{% endif %}"
                  alt="{{ current.name or '' }}"
                  {% if not current.name %}style="display:none"{% endif %}>
+            <span class="letter-mark" id="letter-mark"></span>
             <span class="pokemon-index" id="pokemon-index">
                 {% if current.name %}{{ current.index + 1 }} / {{ current.total }}{% else %}&ndash;{% endif %}
             </span>
@@ -48,6 +49,19 @@ async function navigate(direction) {
     if (data.base && data.base !== data.name) evoText += `[${data.base}] `;
     if (data.evolution_details) evoText += data.evolution_details;
     document.getElementById('pokemon-evo').textContent = evoText;
+
+    const mark = document.getElementById('letter-mark');
+    if (data.letter_changed) {
+        mark.textContent = `--- ${data.name[0].toUpperCase()} ---`;
+        mark.className = 'letter-mark letter-change';
+        mark.style.display = 'block';
+    } else if (data.group_mark) {
+        mark.textContent = '-----';
+        mark.className = 'letter-mark group-mark';
+        mark.style.display = 'block';
+    } else {
+        mark.style.display = 'none';
+    }
 
     const img = document.getElementById('pokemon-img');
     img.src = `${imageBaseUrl}/${data.name.toLowerCase()}`;

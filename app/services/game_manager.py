@@ -148,9 +148,26 @@ def navigate_pokemon(game_id: str, game: GameConfig, pokemon_names: List[str], d
             os.remove(prev_rom)
             print(f"  [{game_id}] Removed ROM: {prev_rom}")
 
+    prev_letter = pokemon_names[current_index][0].lower() if 0 <= current_index < len(pokemon_names) else ""
+    new_letter = new_pokemon[0].lower()
+    letter_changed = prev_letter != new_letter
+
+    if letter_changed:
+        state["letter_count"] = 1
+    else:
+        state["letter_count"] = state.get("letter_count", 0) + 1
+
+    group_mark = not letter_changed and state["letter_count"] % 4 == 0
+
     state["index"] = new_index
     _save_state(game_id, state)
 
     print(f"  [{game_id}] {direction}: index {new_index}, pokemon {new_pokemon}")
 
-    return {"index": new_index, "name": new_pokemon, "total": len(pokemon_names)}
+    return {
+        "index": new_index,
+        "name": new_pokemon,
+        "total": len(pokemon_names),
+        "letter_changed": letter_changed,
+        "group_mark": group_mark,
+    }
