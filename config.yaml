@@ -28,4 +28,4 @@ games:
       Chikorita: grass
       Cyndaquil: fire
       Totodile: water
-    cheat_codes_module: ""
+    cheat_codes_module: "games.gen2.cheat_codes"
