@@ -29,3 +29,17 @@ games:
       Cyndaquil: fire
       Totodile: water
     cheat_codes_module: "games.gen2.cheat_codes"
+  emerald:
+    generation: 3
+    display_name: "Pokemon Emerald"
+    rom_extension: ".gba"
+    base_rom_path: "/Users/nirmendel/Documents/games/pokemon/gen3/Pokemon Emerald.gba"
+    pokemon_dir: "/Users/nirmendel/Documents/games/pokemon/gen3/all/"
+    save_dirs:
+      - "/Users/nirmendel/Documents/RetroArch/states/"
+      - "/Users/nirmendel/Documents/RetroArch/saves/"
+    starters:
+      Treecko: grass
+      Torchic: fire
+      Mudkip: water
+    cheat_codes_module: ""
