@@ -16,8 +16,18 @@
 </div>
 
 <div class="pokemon-list">
+    {% set ns = namespace(prev_letter='', letter_count=0) %}
     {% for pokemon in pokemons %}
-    <div class="pokemon-row">
+    {% set current_letter = pokemon.name[0]|lower %}
+    {% if current_letter != ns.prev_letter %}
+        {% set ns.prev_letter = current_letter %}
+        {% set ns.letter_count = 1 %}
+        {% set divider_class = 'letter-divider' if not loop.first else '' %}
+    {% else %}
+        {% set ns.letter_count = ns.letter_count + 1 %}
+        {% set divider_class = 'group-divider' if ns.letter_count > 1 and (ns.letter_count - 1) % 4 == 0 else '' %}
+    {% endif %}
+    <div class="pokemon-row {{ divider_class }}">
         <span class="pokemon-name">{{ pokemon.name }}</span>
         {% if pokemon.base != pokemon.name %}
         <span class="pokemon-base">[{{ pokemon.base }}]</span>
