@@ -16,4 +16,8 @@ def get_starter_mapping(game_id: str) -> Dict[str, PokemonRelation]:
         from games.gen3.starter_mappings import STARTER_MAPPING
         return STARTER_MAPPING
 
+    if game_id == "platinum":
+        from games.gen4.starter_mappings import STARTER_MAPPING
+        return STARTER_MAPPING
+
     raise ValueError(f"No starter mapping for game: {game_id}")

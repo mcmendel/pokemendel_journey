@@ -43,3 +43,17 @@ games:
       Torchic: fire
       Mudkip: water
     cheat_codes_module: ""
+  platinum:
+    generation: 4
+    display_name: "Pokemon Platinum"
+    rom_extension: ".nds"
+    base_rom_path: "/Users/nirmendel/Documents/games/pokemon/gen4/Pokemon Platinum.nds"
+    pokemon_dir: "/Users/nirmendel/Documents/games/pokemon/gen4/all/"
+    save_dirs:
+      - "/Users/nirmendel/Documents/RetroArch/states/"
+      - "/Users/nirmendel/Documents/RetroArch/saves/"
+    starters:
+      Turtwig: grass
+      Chimchar: fire
+      PipLup: water
+    cheat_codes_module: ""
