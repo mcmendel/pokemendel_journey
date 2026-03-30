@@ -34,6 +34,17 @@
         </label>
         <div id="cheat-codes" class="cheat-codes" style="display:none"></div>
     </div>
+
+    {% if game.best_team %}
+    <div class="best-team-section">
+        <h3 class="best-team-title">Best Team</h3>
+        <div class="best-team-list">
+            {% for member in game.best_team %}
+            <span class="best-team-member">{{ member }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
 

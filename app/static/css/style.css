@@ -327,3 +327,33 @@ h1 {
     font-family: monospace;
     font-size: 0.9rem;
 }
+
+/* Best Team */
+
+.best-team-section {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.best-team-title {
+    color: #a0a0c0;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+}
+
+.best-team-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.best-team-member {
+    background: #16213e;
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    border: 1px solid #2a2a4a;
+}

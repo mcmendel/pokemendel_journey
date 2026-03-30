@@ -17,6 +17,7 @@ class GameConfig:
     save_dirs: List[str] = field(default_factory=list)
     starters: Dict[str, str] = field(default_factory=dict)
     cheat_codes_module: str = ""
+    best_team: List[str] = field(default_factory=list)
 
 
 @dataclass

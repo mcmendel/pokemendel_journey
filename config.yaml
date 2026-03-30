@@ -15,6 +15,13 @@ games:
       Charmander: fire
       Squirtle: water
     cheat_codes_module: "games.gen1.blue.cheat_codes"
+    best_team:
+      - Venusaur
+      - Jolteon
+      - Lapras
+      - Dugtrio
+      - Snorlax
+      - Alakazam
   crystal:
     generation: 2
     display_name: "Pokemon Crystal"
@@ -29,6 +36,13 @@ games:
       Cyndaquil: fire
       Totodile: water
     cheat_codes_module: "games.gen2.cheat_codes"
+    best_team:
+      - Typhlosion
+      - Crobat
+      - Quagsire
+      - Heracross
+      - Espeon
+      - Magneton
   emerald:
     generation: 3
     display_name: "Pokemon Emerald"
@@ -43,6 +57,13 @@ games:
       Torchic: fire
       Mudkip: water
     cheat_codes_module: ""
+    best_team:
+      - Swampert
+      - Gardevoir
+      - Manectric
+      - Breloom
+      - Torkoal
+      - Flygon
   platinum:
     generation: 4
     display_name: "Pokemon Platinum"
@@ -56,4 +77,11 @@ games:
       Turtwig: grass
       Chimchar: fire
       PipLup: water
-    cheat_codes_module: ""
+    cheat_codes_module: "games.gen4.cheat_codes"
+    best_team:
+      - Infernape
+      - Staraptor
+      - Luxray
+      - Roserade
+      - Floatzel
+      - Garchomp
