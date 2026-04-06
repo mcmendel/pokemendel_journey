@@ -76,7 +76,7 @@ games:
     starters:
       Turtwig: grass
       Chimchar: fire
-      PipLup: water
+      Piplup: water
     cheat_codes_module: "games.gen4.cheat_codes"
     best_team:
       - Infernape

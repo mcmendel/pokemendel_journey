@@ -5,6 +5,17 @@
 {% block content %}
 <h1>{{ game.display_name }} - Replace Game</h1>
 
+{% if game.best_team %}
+<div class="best-team-section">
+    <h3 class="best-team-title">Best Team</h3>
+    <div class="best-team-list">
+        {% for member in game.best_team %}
+        <span class="best-team-member">{{ member }}</span>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
 <div class="replace-container">
     <div class="replace-nav">
         <button id="prev-btn" class="nav-arrow">&larr;</button>
@@ -23,6 +34,9 @@
             <span class="pokemon-evo-details" id="pokemon-evo">
                 {% if current.base and current.base != current.name %}[{{ current.base }}] {% endif %}{{ current.evolution_details or "" }}
             </span>
+            <span class="pokemon-stats" id="pokemon-stats">
+                {% if current.stats %}{% if current.stats.final_evo %}{{ current.stats.final_evo }}: {% endif %}Atk: {{ current.stats.attack }} | SpAtk: {{ current.stats.special_attack }}{% endif %}
+            </span>
         </div>
         <button id="next-btn" class="nav-arrow">&rarr;</button>
     </div>
@@ -35,16 +49,6 @@
         <div id="cheat-codes" class="cheat-codes" style="display:none"></div>
     </div>
 
-    {% if game.best_team %}
-    <div class="best-team-section">
-        <h3 class="best-team-title">Best Team</h3>
-        <div class="best-team-list">
-            {% for member in game.best_team %}
-            <span class="best-team-member">{{ member }}</span>
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
 </div>
 {% endblock %}
 
@@ -67,6 +71,14 @@ async function navigate(direction) {
     if (data.base && data.base !== data.name) evoText += `[${data.base}] `;
     if (data.evolution_details) evoText += data.evolution_details;
     document.getElementById('pokemon-evo').textContent = evoText;
+
+    const statsEl = document.getElementById('pokemon-stats');
+    if (data.stats) {
+        const prefix = data.stats.final_evo ? `${data.stats.final_evo}: ` : '';
+        statsEl.textContent = `${prefix}Atk: ${data.stats.attack} | SpAtk: ${data.stats.special_attack}`;
+    } else {
+        statsEl.textContent = '';
+    }
 
     const mark = document.getElementById('letter-mark');
     if (data.letter_changed) {

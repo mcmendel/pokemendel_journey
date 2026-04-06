@@ -278,6 +278,15 @@ h1 {
     min-height: 1.4em;
 }
 
+.pokemon-stats {
+    display: block;
+    color: #7ec8e3;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 0.4rem;
+    min-height: 1.4em;
+}
+
 .replace-hint {
     color: #606080;
     font-size: 0.85rem;

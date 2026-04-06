@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, current_app, abort, jsonify
 
 from app.services.game_manager import create_pokemon_games, get_current_pokemon, navigate_pokemon, get_cheat_codes
-from app.services.pokemon_service import get_marked_pokemon_entries, is_eevee_family
+from app.services.pokemon_service import get_marked_pokemon_entries, is_eevee_family, get_pokemon_stats
 from games.registry import get_starter_mapping
 
 pokemon_bp = Blueprint("pokemon", __name__)
@@ -46,12 +46,16 @@ def _get_sorted_entries(generation: int) -> list:
     return get_marked_pokemon_entries(generation)
 
 
-def _entry_to_dict(entry) -> dict:
-    return {
+def _entry_to_dict(entry, generation: int) -> dict:
+    d = {
         "name": entry.name,
         "base": entry.base,
         "evolution_details": entry.evolution_details,
     }
+    stats = get_pokemon_stats(entry.name, generation)
+    if stats:
+        d["stats"] = stats
+    return d
 
 
 @pokemon_bp.route("/game/<game_id>/replace")
@@ -68,9 +72,11 @@ def replace_page(game_id):
         entry = entries[current["index"]]
         current["base"] = entry.base
         current["evolution_details"] = entry.evolution_details
+        current["stats"] = get_pokemon_stats(current["name"], game.generation, base=entry.base)
     else:
         current["base"] = None
         current["evolution_details"] = ""
+        current["stats"] = None
 
     image_base_url = current_app.config["POKEMON_IMAGE_BASE_URL"]
     return render_template("replace.html", games=games, game=game, game_id=game_id, current=current, image_base_url=image_base_url)
@@ -95,6 +101,7 @@ def navigate(game_id):
     entry = entries[result["index"]]
     result["base"] = entry.base
     result["evolution_details"] = entry.evolution_details
+    result["stats"] = get_pokemon_stats(result["name"], game.generation, base=entry.base)
     cheat_pokemon = result["name"] if is_eevee_family(entry.name, entry.base) else entry.base
     result["cheat_codes"] = get_cheat_codes(game, cheat_pokemon)
     return jsonify(result)
