@@ -48,4 +48,17 @@ def get_pokemon_stats(name: str, generation: int, base: str | None = None) -> di
     return None
 
 
-__all__ = ["MarkedPokemonEntry", "get_marked_pokemon_entries", "is_eevee_family", "get_pokemon_stats"]
+def get_image_slug(name: str, generation: int) -> str:
+    """Return the image filename slug matching download_pokemon_from_google_search output.
+
+    For form Pokemon (e.g. Heat Rotom) the slug is "{base_name}-{form}" (e.g. "Rotom-Heat").
+    For regular Pokemon the slug is the Pokemon's name.
+    """
+    lookup = _get_name_to_pokemon(generation)
+    pokemon = lookup.get(name)
+    if pokemon and pokemon.form and pokemon.base_name:
+        return f"{pokemon.base_name}-{pokemon.form}"
+    return name
+
+
+__all__ = ["MarkedPokemonEntry", "get_marked_pokemon_entries", "is_eevee_family", "get_pokemon_stats", "get_image_slug"]

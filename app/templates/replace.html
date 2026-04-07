@@ -21,7 +21,7 @@
         <button id="prev-btn" class="nav-arrow">&larr;</button>
         <div class="current-pokemon">
             <img id="pokemon-img" class="pokemon-img"
-                 src="{% if current.name %}{{ image_base_url }}/{{ current.name | lower }}{% endif %}"
+                 src="{% if current.image_slug %}{{ image_base_url }}/{{ current.image_slug | lower }}{% endif %}"
                  alt="{{ current.name or '' }}"
                  {% if not current.name %}style="display:none"{% endif %}>
             <span class="letter-mark" id="letter-mark"></span>
@@ -94,7 +94,7 @@ async function navigate(direction) {
     }
 
     const img = document.getElementById('pokemon-img');
-    img.src = `${imageBaseUrl}/${data.name.toLowerCase()}`;
+    img.src = `${imageBaseUrl}/${data.image_slug.toLowerCase()}`;
     img.alt = data.name;
     img.style.display = '';
 

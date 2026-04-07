@@ -1,3 +1,3 @@
-git+https://github.com/mcmendel/pokemendel_core.git@0.5.4#egg=pokemendel_core
+git+https://github.com/mcmendel/pokemendel_core.git@0.6.0#egg=pokemendel_core
 flask
 pyyaml

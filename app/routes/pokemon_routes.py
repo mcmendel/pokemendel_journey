@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, current_app, abort, jsonify
 
 from app.services.game_manager import create_pokemon_games, get_current_pokemon, navigate_pokemon, get_cheat_codes
-from app.services.pokemon_service import get_marked_pokemon_entries, is_eevee_family, get_pokemon_stats
+from app.services.pokemon_service import get_marked_pokemon_entries, is_eevee_family, get_pokemon_stats, get_image_slug
 from games.registry import get_starter_mapping
 
 pokemon_bp = Blueprint("pokemon", __name__)
@@ -73,10 +73,12 @@ def replace_page(game_id):
         current["base"] = entry.base
         current["evolution_details"] = entry.evolution_details
         current["stats"] = get_pokemon_stats(current["name"], game.generation, base=entry.base)
+        current["image_slug"] = get_image_slug(current["name"], game.generation)
     else:
         current["base"] = None
         current["evolution_details"] = ""
         current["stats"] = None
+        current["image_slug"] = None
 
     image_base_url = current_app.config["POKEMON_IMAGE_BASE_URL"]
     return render_template("replace.html", games=games, game=game, game_id=game_id, current=current, image_base_url=image_base_url)
@@ -102,6 +104,7 @@ def navigate(game_id):
     result["base"] = entry.base
     result["evolution_details"] = entry.evolution_details
     result["stats"] = get_pokemon_stats(result["name"], game.generation, base=entry.base)
+    result["image_slug"] = get_image_slug(result["name"], game.generation)
     cheat_pokemon = result["name"] if is_eevee_family(entry.name, entry.base) else entry.base
     result["cheat_codes"] = get_cheat_codes(game, cheat_pokemon)
     return jsonify(result)
