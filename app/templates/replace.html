@@ -44,6 +44,12 @@
 
     <div class="cheat-section">
         <label class="cheat-toggle">
+            <input type="checkbox" id="force-image"> Force Download Image
+        </label>
+    </div>
+
+    <div class="cheat-section">
+        <label class="cheat-toggle">
             <input type="checkbox" id="show-cheats"> Show Cheat Codes
         </label>
         <div id="cheat-codes" class="cheat-codes" style="display:none"></div>
@@ -94,7 +100,9 @@ async function navigate(direction) {
     }
 
     const img = document.getElementById('pokemon-img');
-    img.src = `${imageBaseUrl}/${data.image_slug.toLowerCase()}`;
+    const forceImage = document.getElementById('force-image').checked;
+    const imgUrl = `${imageBaseUrl}/${data.image_slug.toLowerCase()}`;
+    img.src = forceImage ? `${imgUrl}?force=true` : imgUrl;
     img.alt = data.name;
     img.style.display = '';
 
